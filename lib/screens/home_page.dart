@@ -18,7 +18,7 @@ class HomePage extends StatelessWidget {
               auth.logout();
             },
             icon: const Icon(Icons.logout),
-          )
+          ),
         ],
       ),
       body: Padding(
@@ -37,7 +37,6 @@ class HomePage extends StatelessWidget {
 
             const SizedBox(height: 20),
 
-            
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(16),
@@ -75,16 +74,13 @@ class HomePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    "JWT Token",
+                    "JWT Token ",
                     style: TextStyle(color: Colors.orangeAccent),
                   ),
                   const SizedBox(height: 10),
                   Text(
                     auth.jwtToken ?? "-",
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                    ),
+                    style: const TextStyle(color: Colors.white, fontSize: 10),
                   ),
                 ],
               ),
@@ -92,8 +88,20 @@ class HomePage extends StatelessWidget {
 
             const SizedBox(height: 30),
 
-         
-        
+            SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.brown),
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Next: Product Page")),
+                  );
+                },
+                child: const Text("Go to Products"),
+              ),
+            ),
+          ],
         ),
       ),
     );
