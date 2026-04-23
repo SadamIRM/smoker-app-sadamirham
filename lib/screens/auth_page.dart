@@ -77,6 +77,50 @@ class _AuthPageState extends State<AuthPage> {
 
                     const SizedBox(height: 10),
 
-             
+                    const Text(
+                      "SMOKER SHOP",
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 3,
+                        color: Colors.white,
+                      ),
+                    ),
+
+                    const SizedBox(height: 30),
+
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(22),
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
+                        child: Container(
+                          width: 340,
+                          padding: const EdgeInsets.all(22),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.06),
+                            borderRadius: BorderRadius.circular(22),
+                            border: Border.all(
+                              color: Colors.white.withOpacity(0.12),
+                            ),
+                          ),
+                          child: Column(
+                            children: [
+                              Text(
+                                isLogin ? "Login" : "Register",
+                                style: const TextStyle(
+                                  fontSize: 22,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+
+                              const SizedBox(height: 20),
+
+                              _buildField("Email", emailController, false),
+                              const SizedBox(height: 15),
+                              _buildField("Password", passwordController, true),
+
+                              const SizedBox(height: 20),
+
                
   }
