@@ -122,5 +122,105 @@ class _AuthPageState extends State<AuthPage> {
 
                               const SizedBox(height: 20),
 
-               
+                              // ERROR
+                              if (auth.error != null)
+                                Text(
+                                  auth.error!,
+                                  style: const TextStyle(
+                                    color: Colors.redAccent,
+                                  ),
+                                ),
+
+                              // SUCCESS MESSAGE
+                              if (successMessage != null)
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: Text(
+                                    successMessage!,
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      color: Colors.greenAccent,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+
+                              const SizedBox(height: 10),
+
+                              // BUTTON
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.orangeAccent,
+                                  minimumSize: const Size(double.infinity, 50),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(14),
+                                  ),
+                                  elevation: 10,
+                                  shadowColor: Colors.orange,
+                                ),
+                                onPressed: () async {
+                                  if (isLogin) {
+                                    await auth.login(
+                                      emailController.text,
+                                      passwordController.text,
+                                    );
+                                  } else {
+                                    await auth.register(
+                                      emailController.text,
+                                      passwordController.text,
+                                    );
+
+                                    setState(() {
+                                      successMessage =
+                                          "Sign up berhasil. Cek email untuk verifikasi.";
+                                      isLogin = true;
+                                    });
+                                  }
+                                },
+                                child: auth.isLoading
+                                    ? const SizedBox(
+                                        height: 20,
+                                        width: 20,
+                                        child: CircularProgressIndicator(
+                                          color: Colors.white,
+                                          strokeWidth: 2,
+                                        ),
+                                      )
+                                    : Text(
+                                        isLogin ? "Login" : "Register",
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                              ),
+
+                              const SizedBox(height: 10),
+
+                              TextButton(
+                                onPressed: () {
+                                  setState(() {
+                                    isLogin = !isLogin;
+                                    successMessage = null;
+                                  });
+                                },
+                                child: Text(
+                                  isLogin
+                                      ? "Belum punya akun? Register"
+                                      : "Sudah punya akun? Login",
+                                  style: const TextStyle(color: Colors.white70),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
