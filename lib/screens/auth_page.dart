@@ -224,3 +224,30 @@ class _AuthPageState extends State<AuthPage> {
       ),
     );
   }
+
+  Widget _buildField(
+    String label,
+    TextEditingController controller,
+    bool obscure,
+  ) {
+    return TextField(
+      controller: controller,
+      obscureText: obscure,
+      style: const TextStyle(color: Colors.white),
+      decoration: InputDecoration(
+        labelText: label,
+        labelStyle: const TextStyle(color: Colors.white70),
+        filled: true,
+        fillColor: Colors.white.withOpacity(0.05),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: BorderSide(color: Colors.white.withOpacity(0.12)),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: const BorderSide(color: Colors.orangeAccent),
+        ),
+      ),
+    );
+  }
+}
