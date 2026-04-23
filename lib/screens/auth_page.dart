@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
@@ -13,129 +14,69 @@ class _AuthPageState extends State<AuthPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
+  String? successMessage;
+
   @override
   Widget build(BuildContext context) {
     final auth = context.watch<AuthProvider>();
 
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.black, Colors.brown.shade900],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+        decoration: const BoxDecoration(
+          gradient: RadialGradient(
+            center: Alignment.topCenter,
+            radius: 1.6,
+            colors: [Color(0xFF1A1A1A), Color(0xFF000000)],
           ),
         ),
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Icon(
-                  Icons.local_fire_department,
-                  size: 80,
-                  color: Colors.orange,
-                ),
-
-                SizedBox(height: 10),
-
-                Text(
-                  "SMOKER SHOP",
-                  style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 2,
-                  ),
-                ),
-
-                SizedBox(height: 30),
-
-                Container(
-                  padding: EdgeInsets.all(20),
+        child: Stack(
+          children: [
+            // glow kiri atas
+            Positioned(
+              top: -100,
+              left: -80,
+              child: ImageFiltered(
+                imageFilter: ImageFilter.blur(sigmaX: 90, sigmaY: 90),
+                child: Container(
+                  height: 220,
+                  width: 220,
                   decoration: BoxDecoration(
-                    color: Colors.grey[900],
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Column(
-                    children: [
-                      Text(
-                        isLogin ? "Login" : "Register",
-                        style: TextStyle(fontSize: 20),
-                      ),
-
-                      SizedBox(height: 20),
-
-                      TextField(
-                        controller: emailController,
-                        decoration: InputDecoration(
-                          labelText: "Email",
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-
-                      SizedBox(height: 15),
-
-                      TextField(
-                        controller: passwordController,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          labelText: "Password",
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-
-                      SizedBox(height: 20),
-
-                      if (auth.error != null)
-                        Text(auth.error!, style: TextStyle(color: Colors.red)),
-
-                      SizedBox(height: 10),
-
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.brown,
-                          minimumSize: Size(double.infinity, 50),
-                        ),
-                        onPressed: () {
-                          if (isLogin) {
-                            auth.login(
-                              emailController.text,
-                              passwordController.text,
-                            );
-                          } else {
-                            auth.register(
-                              emailController.text,
-                              passwordController.text,
-                            );
-                          }
-                        },
-                        child: auth.isLoading
-                            ? CircularProgressIndicator(color: Colors.white)
-                            : Text(isLogin ? "Login" : "Register"),
-                      ),
-
-                      SizedBox(height: 10),
-
-                      TextButton(
-                        onPressed: () {
-                          setState(() {
-                            isLogin = !isLogin;
-                          });
-                        },
-                        child: Text(
-                          isLogin
-                              ? "Belum punya akun? Register"
-                              : "Sudah punya akun? Login",
-                        ),
-                      ),
-                    ],
+                    shape: BoxShape.circle,
+                    color: Colors.orange.withOpacity(0.18),
                   ),
                 ),
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
-    );
+
+            // glow kanan bawah
+            Positioned(
+              bottom: -120,
+              right: -100,
+              child: ImageFiltered(
+                imageFilter: ImageFilter.blur(sigmaX: 100, sigmaY: 100),
+                child: Container(
+                  height: 260,
+                  width: 260,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.deepOrange.withOpacity(0.12),
+                  ),
+                ),
+              ),
+            ),
+
+            Center(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const Icon(
+                      Icons.local_fire_department,
+                      size: 90,
+                      color: Colors.orangeAccent,
+                    ),
+
+                    const SizedBox(height: 10),
+
+             
+               
   }
-}
