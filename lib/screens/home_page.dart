@@ -63,7 +63,34 @@ class HomePage extends StatelessWidget {
 
             const SizedBox(height: 20),
 
-      Box(height: 30),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.orange.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: Colors.orangeAccent),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "JWT Token",
+                    style: TextStyle(color: Colors.orangeAccent),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    auth.jwtToken ?? "-",
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 10,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 30),
 
          
         
