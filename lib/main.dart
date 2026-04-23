@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
+import 'providers/auth_provider.dart';
+import 'screens/auth_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,7 +19,7 @@ void main() async {
     ),
   );
 
-  runApp(MyApp());
+  runApp(ChangeNotifierProvider(create: (_) => AuthProvider(), child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -25,10 +28,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Smoker App',
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(title: Text("Auth Page")),
-        body: Center(child: Text("tes")),
+      theme: ThemeData.dark().copyWith(
+        primaryColor: Colors.brown,
+        scaffoldBackgroundColor: Colors.black,
       ),
+      home: AuthPage(),
     );
   }
 }
