@@ -8,3 +8,8 @@ class AuthService {
       email: email,
       password: password,
     );
+
+    await result.user!.sendEmailVerification();
+    return result.user;
+  }
+}
