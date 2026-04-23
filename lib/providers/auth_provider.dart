@@ -6,6 +6,7 @@ class AuthProvider extends ChangeNotifier {
   final AuthService _authService = AuthService();
 
   User? user;
+  String? jwtToken;
   bool isLoading = false;
   String? error;
 
@@ -14,7 +15,7 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      user = await _authService.register(email, password);
+      await _authService.register(email, password);
       error = null;
     } catch (e) {
       error = e.toString();
@@ -29,7 +30,8 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      user = await _authService.login(email, password);
+      jwtToken = await _authService.login(email, password);
+      user = FirebaseAuth.instance.currentUser;
       error = null;
     } catch (e) {
       error = e.toString();
@@ -39,9 +41,10 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void logout() async {
+  Future<void> logout() async {
     await _authService.logout();
     user = null;
+    jwtToken = null;
     notifyListeners();
   }
 }

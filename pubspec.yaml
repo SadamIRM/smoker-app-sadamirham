@@ -18,6 +18,7 @@ dependencies:
   flutter:
     sdk: flutter
   provider: ^6.1.2
+  crypto: ^3.0.3
   # iOS style icons
   cupertino_icons: ^1.0.8
 
