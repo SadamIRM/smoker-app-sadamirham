@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
+
 import 'providers/auth_provider.dart';
+import 'providers/cart_provider.dart';
 import 'screens/auth_wrapper.dart';
+import 'screens/cart_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +22,15 @@ void main() async {
     ),
   );
 
-  runApp(ChangeNotifierProvider(create: (_) => AuthProvider(), child: MyApp()));
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => CartProvider()),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -32,7 +43,10 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.brown,
         scaffoldBackgroundColor: Colors.black,
       ),
+
       home: AuthWrapper(),
+
+      routes: {'/cart': (context) => CartPage()},
     );
   }
 }
