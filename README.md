@@ -171,7 +171,7 @@ flutter run
 ## Author
 
 Sadam Irham Marami (1123150087)
-Ti 23 SE
+Kelas : Ti 23 SE
 Prodi : Teknik Informatika
 Jurusan : Software Engineer
 demo : https://youtu.be/degnL8qxK3c
