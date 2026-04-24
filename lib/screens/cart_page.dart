@@ -1,6 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/cart_provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../providers/auth_provider.dart';
+
+Future<void> checkout(BuildContext context) async {
+  final cart = context.read<CartProvider>();
+  final auth = context.read<AuthProvider>();
+
+  if (cart.items.isEmpty) return;
+
+  await FirebaseFirestore.instance.collection('orders').add({
+    "email": auth.user?.email ?? "unknown",
+    "items": cart.items
+        .map((e) => {"name": e.name, "price": e.price, "image": e.image})
+        .toList(),
+    "total": cart.totalPrice,
+    "createdAt": FieldValue.serverTimestamp(),
+
+    "jwt": auth.jwtToken ?? "no-token",
+  });
+
+  cart.clearCart();
+
+  ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(content: Text("Checkout berhasil & tersimpan")),
+  );
+}
 
 class CartPage extends StatelessWidget {
   @override
@@ -41,7 +68,6 @@ class CartPage extends StatelessWidget {
                         ),
                         child: Row(
                           children: [
-                            // 🔥 GAMBAR PRODUK (INI YANG DIPERBAIKI)
                             ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: item.image.isNotEmpty
@@ -64,7 +90,6 @@ class CartPage extends StatelessWidget {
 
                             const SizedBox(width: 10),
 
-                            // 🔥 INFO PRODUK
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -124,14 +149,8 @@ class CartPage extends StatelessWidget {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.green,
                           ),
-                          onPressed: () {
-                            cart.clearCart();
-
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text("Checkout berhasil (dummy)"),
-                              ),
-                            );
+                          onPressed: () async {
+                            await checkout(context);
                           },
                           child: const Text("Checkout"),
                         ),
