@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
-import '../providers/auth_provider.dart';
+import '../models/product.dart';
+import '../providers/cart_provider.dart';
 
 class HomePage extends StatelessWidget {
+  final CollectionReference productsRef = FirebaseFirestore.instance.collection(
+    'products',
+  );
+
   @override
   Widget build(BuildContext context) {
-    final auth = context.watch<AuthProvider>();
+    final cart = context.watch<CartProvider>();
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -13,97 +19,44 @@ class HomePage extends StatelessWidget {
         title: const Text("Smoker Shop"),
         backgroundColor: Colors.brown,
         actions: [
-          IconButton(
-            onPressed: () {
-              auth.logout();
-            },
-            icon: const Icon(Icons.logout),
+          Stack(
+            children: [
+              IconButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/cart');
+                },
+                icon: const Icon(Icons.shopping_cart),
+              ),
+              Positioned(
+                right: 5,
+                top: 5,
+                child: CircleAvatar(
+                  radius: 8,
+                  backgroundColor: Colors.red,
+                  child: Text(
+                    cart.items.length.toString(),
+                    style: const TextStyle(fontSize: 10),
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              "Dashboard",
+
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Padding(
+            padding: EdgeInsets.all(16),
+            child: Text(
+              "Selamat beli rokok",
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 26,
+                fontSize: 22,
                 fontWeight: FontWeight.bold,
               ),
             ),
+          ),
 
-            const SizedBox(height: 20),
-
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.white10,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "User Info",
-                    style: TextStyle(color: Colors.white70),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    "Email: ${auth.user?.email ?? '-'}",
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                ],
-              ),
-            ),
-
-            const SizedBox(height: 20),
-
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.orange.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.orangeAccent),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "JWT Token ",
-                    style: TextStyle(color: Colors.orangeAccent),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    auth.jwtToken ?? "-",
-                    style: const TextStyle(color: Colors.white, fontSize: 10),
-                  ),
-                ],
-              ),
-            ),
-
-            const SizedBox(height: 30),
-
-            SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.brown),
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Next: Product Page")),
-                  );
-                },
-                child: const Text("Go to Products"),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+        
