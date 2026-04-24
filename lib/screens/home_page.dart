@@ -96,10 +96,24 @@ class HomePage extends StatelessWidget {
                       ),
                       child: Row(
                         children: [
-                          const Icon(
-                            Icons.smoking_rooms,
-                            color: Colors.orangeAccent,
-                            size: 40,
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: product.image.isNotEmpty
+                                ? Image.network(
+                                    product.image,
+                                    width: 60,
+                                    height: 60,
+                                    fit: BoxFit.cover,
+                                  )
+                                : Container(
+                                    width: 60,
+                                    height: 60,
+                                    color: Colors.grey,
+                                    child: const Icon(
+                                      Icons.image,
+                                      color: Colors.white,
+                                    ),
+                                  ),
                           ),
 
                           const SizedBox(width: 15),
