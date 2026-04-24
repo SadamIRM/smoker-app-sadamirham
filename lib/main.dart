@@ -9,13 +9,13 @@ void main() async {
 
   await Firebase.initializeApp(
     options: FirebaseOptions(
-      apiKey: "AIzaSyCSIHfcKw7SiCKQgqoSnEwuIpl1Yz0rpno",
-      authDomain: "smoker-apps.firebaseapp.com",
-      projectId: "smoker-apps",
-      storageBucket: "smoker-apps.firebasestorage.app",
-      messagingSenderId: "688428289423",
-      appId: "1:688428289423:web:a6eea4c4cd345033830ffa",
-      measurementId: "G-DGFG9VWRET",
+      apiKey: "AIzaSyCn5CiyqIuNJaQMy8APJHkWYNady7vb0Gs",
+      authDomain: "smoker-app-sadam.firebaseapp.com",
+      projectId: "smoker-app-sadam",
+      storageBucket: "smoker-app-sadam.firebasestorage.app",
+      messagingSenderId: "542694944693",
+      appId: "1:542694944693:web:abd7e49e39966b5411f3fc",
+      measurementId: "G-8LXZRKW5JL",
     ),
   );
 
