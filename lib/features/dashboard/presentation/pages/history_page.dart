@@ -358,7 +358,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                     padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                                     child: ElevatedButton.icon(
                                       icon: const Icon(Icons.payment_rounded, size: 18),
-                                      label: const Text('Bayar Sekarang via Wallet Ku'),
+                                      label: const Text('Bayar Sekarang via Smoke Money'),
                                       onPressed: () => _payPendingTransaction(tx),
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: AppColors.primary,
@@ -395,15 +395,15 @@ class _HistoryPageState extends State<HistoryPage> {
 
   Future<void> _payPendingTransaction(TransactionModel tx) async {
     final uri = Uri(
-      scheme: 'dompetkampus',
+      scheme: 'smokemoney',
       host: 'pay',
       queryParameters: {
         'merchant_id': 'merchant_uts_1123150086',
-        'merchant_name': 'Toko Material Felan',
+        'merchant_name': 'Store Smoke',
         'amount': tx.totalAmount.toStringAsFixed(0),
         'description': 'Pembayaran Order ${tx.transactionNumber}',
         'reference': tx.transactionNumber,
-        'callback': 'tokomaterial://callback',
+        'callback': 'smokestore://callback',
       },
     );
 
@@ -412,14 +412,14 @@ class _HistoryPageState extends State<HistoryPage> {
       if (!launched) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Aplikasi Wallet Ku tidak ditemukan/terinstall.')),
+            const SnackBar(content: Text('Aplikasi Smoke Money tidak ditemukan/terinstall.')),
           );
         }
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Gagal membuka Wallet Ku: Aplikasi tidak terinstall.')),
+          const SnackBar(content: Text('Gagal membuka Smoke Money: Aplikasi tidak terinstall.')),
         );
       }
     }

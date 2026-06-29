@@ -60,17 +60,17 @@ class _MyAppState extends State<MyApp> {
     try {
       _appLinks.uriLinkStream.listen(
         (uri) {
-          debugPrint('[TokoMaterial] Deep link masuk: $uri');
-          if (uri.scheme == 'tokomaterial' && uri.host == 'callback') {
+          debugPrint('[StoreSmoke] Deep link masuk: $uri');
+          if (uri.scheme == 'smokestore' && uri.host == 'callback') {
             _handleCallback(uri);
           }
         },
         onError: (e) {
-          debugPrint('[TokoMaterial] Error deep link stream: $e');
+          debugPrint('[StoreSmoke] Error deep link stream: $e');
         },
       );
     } catch (e) {
-      debugPrint('[TokoMaterial] Gagal mendaftarkan deep link listener: $e');
+      debugPrint('[StoreSmoke] Gagal mendaftarkan deep link listener: $e');
     }
   }
 
@@ -81,7 +81,7 @@ class _MyAppState extends State<MyApp> {
     final reference = uri.queryParameters['reference'];
 
     debugPrint(
-      '[TokoMaterial] Callback status: $status, reference: $reference',
+      '[StoreSmoke] Callback status: $status, reference: $reference',
     );
 
     if (reference == null ||
@@ -95,7 +95,7 @@ class _MyAppState extends State<MyApp> {
     // Cegah pemrosesan ganda untuk kunci referensi + status yang sama dalam waktu singkat
     if (_lastProcessedKey == callbackKey) {
       debugPrint(
-        '[TokoMaterial] Kunci callback $callbackKey sudah diproses, diabaikan.',
+        '[StoreSmoke] Kunci callback $callbackKey sudah diproses, diabaikan.',
       );
       return;
     }
@@ -117,16 +117,16 @@ class _MyAppState extends State<MyApp> {
           '${AppConstants.baseUrl}/transactions/callback?status=success&reference=$reference',
         );
         debugPrint(
-          '[TokoMaterial] Callback backend response: ${response.statusCode}',
+          '[StoreSmoke] Callback backend response: ${response.statusCode}',
         );
       } catch (e) {
-        debugPrint('[TokoMaterial] Gagal update status ke backend: $e');
+        debugPrint('[StoreSmoke] Gagal update status ke backend: $e');
       }
 
       // Kirim Notifikasi Latar Belakang (System Notification)
       NotificationService().showPaymentNotification(
         title: 'Pembayaran Berhasil 🎉',
-        body: 'Transaksi $reference berhasil dibayar via Wallet Ku.',
+        body: 'Transaksi $reference berhasil dibayar via Smoke Money.',
       );
 
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -146,7 +146,7 @@ class _MyAppState extends State<MyApp> {
           ? 'Pembayaran dibatalkan.'
           : 'Pembayaran gagal. Silakan coba lagi.';
 
-      debugPrint('[TokoMaterial] Pembayaran status $status: $message');
+      debugPrint('[StoreSmoke] Pembayaran status $status: $message');
 
       // Kirim Notifikasi Latar Belakang (System Notification) - Silent (Hanya masuk drawer, tidak pop-up melayang)
       NotificationService().showPaymentNotification(

@@ -58,7 +58,7 @@ class _AwaitingPaymentPageState extends State<AwaitingPaymentPage> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Pembayaran belum diterima. Silakan selesaikan di aplikasi Wallet Ku.'),
+            content: Text('Pembayaran belum diterima. Silakan selesaikan di aplikasi Smoke Money.'),
             backgroundColor: Colors.orange,
           ),
         );
@@ -81,17 +81,17 @@ class _AwaitingPaymentPageState extends State<AwaitingPaymentPage> {
     }
   }
 
-  Future<void> _relaunchWalletKu() async {
+  Future<void> _relaunchSmokeMoney() async {
     final uri = Uri(
-      scheme: 'dompetkampus',
+      scheme: 'smokemoney',
       host: 'pay',
       queryParameters: {
         'merchant_id': 'merchant_uts_1123150086',
-        'merchant_name': 'Toko Material Felan',
+        'merchant_name': 'Store Smoke',
         'amount': widget.totalAmount.toStringAsFixed(0),
         'description': 'Pembayaran Order ${widget.transactionNumber}',
         'reference': widget.transactionNumber,
-        'callback': 'tokomaterial://callback',
+        'callback': 'smokestore://callback',
       },
     );
 
@@ -99,12 +99,12 @@ class _AwaitingPaymentPageState extends State<AwaitingPaymentPage> {
       final launched = await launchUrl(uri, mode: LaunchMode.externalApplication);
       if (!launched) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Aplikasi Wallet Ku tidak ditemukan/terinstall.')),
+          const SnackBar(content: Text('Aplikasi Smoke Money tidak ditemukan/terinstall.')),
         );
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Gagal membuka Wallet Ku: Aplikasi tidak terinstall.')),
+        const SnackBar(content: Text('Gagal membuka Smoke Money: Aplikasi tidak terinstall.')),
       );
     }
   }
@@ -152,7 +152,7 @@ class _AwaitingPaymentPageState extends State<AwaitingPaymentPage> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Silakan selesaikan pembayaran Anda di aplikasi Wallet Ku',
+                  'Silakan selesaikan pembayaran Anda di aplikasi Smoke Money',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 14,
@@ -184,7 +184,7 @@ class _AwaitingPaymentPageState extends State<AwaitingPaymentPage> {
                       const Divider(height: 24),
                       _buildRow('Jumlah Bayar', 'Rp ${widget.totalAmount.toStringAsFixed(0)}'),
                       const Divider(height: 24),
-                      _buildRow('Metode Pembayaran', 'Wallet Ku (E-Money)'),
+                      _buildRow('Metode Pembayaran', 'Smoke Money (E-Money)'),
                     ],
                   ),
                 ),
@@ -213,8 +213,8 @@ class _AwaitingPaymentPageState extends State<AwaitingPaymentPage> {
                 const SizedBox(height: 12),
                 OutlinedButton.icon(
                   icon: const Icon(Icons.open_in_new),
-                  label: const Text('Buka Ulang Wallet Ku'),
-                  onPressed: _relaunchWalletKu,
+                  label: const Text('Buka Ulang Smoke Money'),
+                  onPressed: _relaunchSmokeMoney,
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppColors.primary,
                     side: BorderSide(color: AppColors.primary),

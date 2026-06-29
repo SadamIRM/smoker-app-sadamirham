@@ -17,7 +17,7 @@ class CheckoutPage extends StatefulWidget {
 
 class _CheckoutPageState extends State<CheckoutPage> {
   bool _isProcessing = false;
-  String _selectedPaymentMethod = 'Wallet Ku';
+  String _selectedPaymentMethod = 'Smoke Money';
 
   void _processCheckout() async {
     setState(() {
@@ -39,17 +39,17 @@ class _CheckoutPageState extends State<CheckoutPage> {
         // Refresh local cart state in provider (since it was cleared in backend)
         context.read<CartProvider>().clearLocalCart();
 
-        if (_selectedPaymentMethod == 'Wallet Ku') {
+        if (_selectedPaymentMethod == 'Smoke Money') {
           final uri = Uri(
-            scheme: 'dompetkampus',
+            scheme: 'smokemoney',
             host: 'pay',
             queryParameters: {
               'merchant_id': 'merchant_uts_1123150086',
-              'merchant_name': 'Toko Material Felan',
+              'merchant_name': 'Store Smoke',
               'amount': totalAmount.toStringAsFixed(0),
               'description': 'Pembayaran Order $txNumber',
               'reference': txNumber,
-              'callback': 'tokomaterial://callback',
+              'callback': 'smokestore://callback',
             },
           );
           
@@ -57,12 +57,12 @@ class _CheckoutPageState extends State<CheckoutPage> {
             final launched = await launchUrl(uri, mode: LaunchMode.externalApplication);
             if (!launched) {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Aplikasi Wallet Ku tidak ditemukan/terinstall.')),
+                const SnackBar(content: Text('Aplikasi Smoke Money tidak ditemukan/terinstall.')),
               );
             }
           } catch (e) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Gagal membuka Wallet Ku: Aplikasi tidak terinstall.')),
+              const SnackBar(content: Text('Gagal membuka Smoke Money: Aplikasi tidak terinstall.')),
             );
           }
 
@@ -384,9 +384,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
                             ),
                             const SizedBox(height: 12),
                             _buildPaymentMethodOption(
-                              id: 'Wallet Ku',
-                              title: 'Wallet Ku (E-Money)',
-                              subtitle: 'Bayar instan menggunakan saldo Wallet Ku Anda',
+                              id: 'Smoke Money',
+                              title: 'Smoke Money (E-Money)',
+                              subtitle: 'Bayar instan menggunakan saldo Smoke Money Anda',
                               icon: Icons.account_balance_wallet_outlined,
                             ),
                             const Divider(height: 16),
