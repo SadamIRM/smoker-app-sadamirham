@@ -82,6 +82,7 @@ class _HistoryPageState extends State<HistoryPage> {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text(
           'Riwayat Transaksi',
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),

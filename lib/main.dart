@@ -169,12 +169,12 @@ class _MyAppState extends State<MyApp> {
       title: AppStrings.appName,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
-      initialRoute: AppRouter.login,
+      initialRoute: AppRouter.splash,
       routes: AppRouter.routes,
       onGenerateRoute: (settings) {
         final builder =
             AppRouter.routes[settings.name] ??
-            AppRouter.routes[AppRouter.login]!;
+            AppRouter.routes[AppRouter.splash]!;
         return MaterialPageRoute(builder: builder, settings: settings);
       },
     );

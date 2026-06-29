@@ -42,6 +42,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text(
           'Profil Saya',
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),

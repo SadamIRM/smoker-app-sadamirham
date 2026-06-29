@@ -30,6 +30,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text(
           'Home Belanja',
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
