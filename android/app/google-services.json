@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1012229817540",
+    "project_id": "smoke-store-75d36",
+    "storage_bucket": "smoke-store-75d36.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1012229817540:android:a15452653385a048997591",
+        "android_client_info": {
+          "package_name": "com.example.smoker_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1012229817540-cb0ogavbe9jde943idse1lhrhn1remuu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_zc0DH2UEyRIhazpaQEYN8-ZHoBxsrrc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1012229817540-cb0ogavbe9jde943idse1lhrhn1remuu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
