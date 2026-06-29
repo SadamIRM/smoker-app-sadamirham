@@ -1,9 +1,7 @@
-
-
-import 'package:matrial_1123150086_uts/core/constants/app_constants.dart';
-import 'package:matrial_1123150086_uts/core/services/dio_client.dart';
-import 'package:matrial_1123150086_uts/features/dashboard/data/models/product_model.dart';
-import 'package:matrial_1123150086_uts/features/dashboard/domain/repositories/product_repository.dart';
+import 'package:smoker_app/core/constants/app_constants.dart';
+import 'package:smoker_app/core/services/dio_client.dart';
+import 'package:smoker_app/features/dashboard/data/models/product_model.dart';
+import 'package:smoker_app/features/dashboard/domain/repositories/product_repository.dart';
 
 class ProductRepositoryImpl extends ProductRepository {
   @override

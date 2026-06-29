@@ -1,9 +1,8 @@
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:matrial_1123150086_uts/core/constants/app_constants.dart';
-import 'package:matrial_1123150086_uts/core/services/secure_storage.dart';
-
+import 'package:smoker_app/core/constants/app_constants.dart';
+import 'package:smoker_app/core/services/secure_storage.dart';
 
 class DioClient {
   static Dio? _instance;

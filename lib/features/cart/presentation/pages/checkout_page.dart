@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:matrial_1123150086_uts/core/constants/app_colors.dart';
-import 'package:matrial_1123150086_uts/core/constants/app_constants.dart';
+import 'package:smoker_app/core/constants/app_colors.dart';
+import 'package:smoker_app/core/constants/app_constants.dart';
 import '../providers/cart_provider.dart';
 import '../providers/checkout_provider.dart';
 import 'payment_success_page.dart';

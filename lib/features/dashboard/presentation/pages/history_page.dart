@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:matrial_1123150086_uts/core/constants/app_colors.dart';
-import 'package:matrial_1123150086_uts/core/constants/app_constants.dart';
-import 'package:matrial_1123150086_uts/core/services/dio_client.dart';
-import 'package:matrial_1123150086_uts/features/dashboard/data/models/transaction_model.dart';
+import 'package:smoker_app/core/constants/app_colors.dart';
+import 'package:smoker_app/core/constants/app_constants.dart';
+import 'package:smoker_app/core/services/dio_client.dart';
+import 'package:smoker_app/features/dashboard/data/models/transaction_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HistoryPage extends StatefulWidget {

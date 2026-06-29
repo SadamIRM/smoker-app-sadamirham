@@ -1,19 +1,19 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:app_links/app_links.dart';
-import 'package:matrial_1123150086_uts/core/constants/app_strings.dart';
-import 'package:matrial_1123150086_uts/core/constants/app_constants.dart';
-import 'package:matrial_1123150086_uts/core/routes/app_router.dart';
-import 'package:matrial_1123150086_uts/core/services/secure_storage.dart';
-import 'package:matrial_1123150086_uts/core/services/dio_client.dart';
-import 'package:matrial_1123150086_uts/core/theme/app_theme.dart';
-import 'package:matrial_1123150086_uts/features/auth/presentation/providers/auth_provider.dart';
-import 'package:matrial_1123150086_uts/features/cart/presentation/providers/cart_provider.dart';
-import 'package:matrial_1123150086_uts/features/cart/presentation/providers/checkout_provider.dart';
-import 'package:matrial_1123150086_uts/features/cart/presentation/pages/payment_success_page.dart';
-import 'package:matrial_1123150086_uts/features/dashboard/presentation/providers/product_provider.dart';
+import 'package:smoker_app/core/constants/app_strings.dart';
+import 'package:smoker_app/core/constants/app_constants.dart';
+import 'package:smoker_app/core/routes/app_router.dart';
+import 'package:smoker_app/core/services/secure_storage.dart';
+import 'package:smoker_app/core/services/dio_client.dart';
+import 'package:smoker_app/core/theme/app_theme.dart';
+import 'package:smoker_app/features/auth/presentation/providers/auth_provider.dart';
+import 'package:smoker_app/features/cart/presentation/providers/cart_provider.dart';
+import 'package:smoker_app/features/cart/presentation/providers/checkout_provider.dart';
+import 'package:smoker_app/features/cart/presentation/pages/payment_success_page.dart';
+import 'package:smoker_app/features/dashboard/presentation/providers/product_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:matrial_1123150086_uts/core/services/notification_service.dart';
+import 'package:smoker_app/core/services/notification_service.dart';
 import 'firebase_options.dart';
 
 void main() async {

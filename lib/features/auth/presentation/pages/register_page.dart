@@ -1,12 +1,12 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:matrial_1123150086_uts/core/constants/app_colors.dart';
-import 'package:matrial_1123150086_uts/core/routes/app_router.dart';
-import 'package:matrial_1123150086_uts/core/shared/widgets/auth_header.dart';
-import 'package:matrial_1123150086_uts/core/shared/widgets/custom_button.dart';
-import 'package:matrial_1123150086_uts/core/shared/widgets/custom_text_field.dart';
-import 'package:matrial_1123150086_uts/core/shared/widgets/loading_overlay.dart';
-import 'package:matrial_1123150086_uts/features/auth/presentation/providers/auth_provider.dart';
+import 'package:smoker_app/core/constants/app_colors.dart';
+import 'package:smoker_app/core/routes/app_router.dart';
+import 'package:smoker_app/core/shared/widgets/auth_header.dart';
+import 'package:smoker_app/core/shared/widgets/custom_button.dart';
+import 'package:smoker_app/core/shared/widgets/custom_text_field.dart';
+import 'package:smoker_app/core/shared/widgets/loading_overlay.dart';
+import 'package:smoker_app/features/auth/presentation/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 
 class RegisterPage extends StatefulWidget {

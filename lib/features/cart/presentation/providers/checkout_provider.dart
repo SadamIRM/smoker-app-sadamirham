@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:matrial_1123150086_uts/core/constants/app_constants.dart';
-import 'package:matrial_1123150086_uts/core/services/dio_client.dart';
+import 'package:smoker_app/core/constants/app_constants.dart';
+import 'package:smoker_app/core/services/dio_client.dart';
 
 class CheckoutProvider extends ChangeNotifier {
   bool _isProcessing = false;
