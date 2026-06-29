@@ -1,12 +1,12 @@
 class AppConstants{
   static const String baseUrl = 'http://192.168.1.18:8080/v1';
- 
+
   // Auth endpoints
   static const String verifyToken = '/auth/verify-token';
- 
+
   // Product endpoints
   static const String products = '/products';
- 
+
   // Cart endpoints
   static const String cart = '/cart';
   static const String cartQuantity = '/cart/quantity';
