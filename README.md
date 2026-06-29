@@ -148,7 +148,7 @@ flutter pub get
 flutter run
 ```
 
-
+---
 
 ## Catatan
 
@@ -157,7 +157,7 @@ flutter run
 * State management menggunakan Provider
 * Perubahan state menggunakan notifyListeners()
 
-
+---
 
 ## Pengembangan Selanjutnya
 
@@ -165,3 +165,11 @@ flutter run
 * Penyimpanan cart secara persisten
 * Peningkatan UI/UX
 * Penambahan detail produk
+
+---
+
+## Author
+
+Sadam Irham (1123150087)
+
+---
