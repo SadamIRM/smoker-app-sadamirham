@@ -253,9 +253,13 @@ class _AwaitingPaymentPageState extends State<AwaitingPaymentPage> {
           label,
           style: TextStyle(fontSize: 13, color: AppColors.textSecondary, fontWeight: FontWeight.w500),
         ),
-        Text(
-          value,
-          style: TextStyle(fontSize: 13, color: AppColors.textPrimary, fontWeight: FontWeight.bold),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Text(
+            value,
+            textAlign: TextAlign.end,
+            style: TextStyle(fontSize: 13, color: AppColors.textPrimary, fontWeight: FontWeight.bold),
+          ),
         ),
       ],
     );
