@@ -1,52 +1,210 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:app_links/app_links.dart';
+import 'package:matrial_1123150086_uts/core/constants/app_strings.dart';
+import 'package:matrial_1123150086_uts/core/constants/app_constants.dart';
+import 'package:matrial_1123150086_uts/core/routes/app_router.dart';
+import 'package:matrial_1123150086_uts/core/services/secure_storage.dart';
+import 'package:matrial_1123150086_uts/core/services/dio_client.dart';
+import 'package:matrial_1123150086_uts/core/theme/app_theme.dart';
+import 'package:matrial_1123150086_uts/features/auth/presentation/providers/auth_provider.dart';
+import 'package:matrial_1123150086_uts/features/cart/presentation/providers/cart_provider.dart';
+import 'package:matrial_1123150086_uts/features/cart/presentation/providers/checkout_provider.dart';
+import 'package:matrial_1123150086_uts/features/cart/presentation/pages/payment_success_page.dart';
+import 'package:matrial_1123150086_uts/features/dashboard/presentation/providers/product_provider.dart';
 import 'package:provider/provider.dart';
-
-import 'providers/auth_provider.dart';
-import 'providers/cart_provider.dart';
-import 'screens/auth_wrapper.dart';
-import 'screens/cart_page.dart';
+import 'package:matrial_1123150086_uts/core/services/notification_service.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(
-    options: FirebaseOptions(
-      apiKey: "AIzaSyCn5CiyqIuNJaQMy8APJHkWYNady7vb0Gs",
-      authDomain: "smoker-app-sadam.firebaseapp.com",
-      projectId: "smoker-app-sadam",
-      storageBucket: "smoker-app-sadam.firebasestorage.app",
-      messagingSenderId: "542694944693",
-      appId: "1:542694944693:web:abd7e49e39966b5411f3fc",
-      measurementId: "G-8LXZRKW5JL",
-    ),
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  await NotificationService().init();
 
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => ProductProvider()),
         ChangeNotifierProvider(create: (_) => CartProvider()),
+        ChangeNotifierProvider(create: (_) => CheckoutProvider()),
       ],
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final _appLinks = AppLinks();
+  final _navigatorKey = GlobalKey<NavigatorState>();
+  final _scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _initDeepLinkListener();
+    });
+  }
+
+  void _initDeepLinkListener() {
+    try {
+      _appLinks.uriLinkStream.listen(
+        (uri) {
+          debugPrint('[TokoMaterial] Deep link masuk: $uri');
+          if (uri.scheme == 'tokomaterial' && uri.host == 'callback') {
+            _handleCallback(uri);
+          }
+        },
+        onError: (e) {
+          debugPrint('[TokoMaterial] Error deep link stream: $e');
+        },
+      );
+    } catch (e) {
+      debugPrint('[TokoMaterial] Gagal mendaftarkan deep link listener: $e');
+    }
+  }
+
+  String? _lastProcessedKey;
+
+  Future<void> _handleCallback(Uri uri) async {
+    final status = uri.queryParameters['status'];
+    final reference = uri.queryParameters['reference'];
+
+    debugPrint(
+      '[TokoMaterial] Callback status: $status, reference: $reference',
+    );
+
+    if (reference == null ||
+        reference.isEmpty ||
+        status == null ||
+        status.isEmpty)
+      return;
+
+    final callbackKey = '${reference}_$status';
+
+    // Cegah pemrosesan ganda untuk kunci referensi + status yang sama dalam waktu singkat
+    if (_lastProcessedKey == callbackKey) {
+      debugPrint(
+        '[TokoMaterial] Kunci callback $callbackKey sudah diproses, diabaikan.',
+      );
+      return;
+    }
+    _lastProcessedKey = callbackKey;
+
+    // Bersihkan last processed setelah beberapa detik
+    Future.delayed(const Duration(seconds: 5), () {
+      if (_lastProcessedKey == callbackKey) {
+        _lastProcessedKey = null;
+      }
+    });
+
+    // TUNDA 600ms agar Flutter selesai memulihkan UI setelah resume dari background
+    await Future.delayed(const Duration(milliseconds: 600));
+
+    if (status == 'success') {
+      try {
+        final response = await DioClient.instance.get(
+          '${AppConstants.baseUrl}/transactions/callback?status=success&reference=$reference',
+        );
+        debugPrint(
+          '[TokoMaterial] Callback backend response: ${response.statusCode}',
+        );
+      } catch (e) {
+        debugPrint('[TokoMaterial] Gagal update status ke backend: $e');
+      }
+
+      // Kirim Notifikasi Latar Belakang (System Notification)
+      NotificationService().showPaymentNotification(
+        title: 'Pembayaran Berhasil 🎉',
+        body: 'Transaksi $reference berhasil dibayar via Wallet Ku.',
+      );
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _navigatorKey.currentState?.pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (context) => PaymentSuccessPage(
+              onSuccess: () {
+                _navigatorKey.currentState?.popUntil((route) => route.isFirst);
+              },
+            ),
+          ),
+          (route) => route.isFirst,
+        );
+      });
+    } else {
+      final message = status == 'cancelled'
+          ? 'Pembayaran dibatalkan.'
+          : 'Pembayaran gagal. Silakan coba lagi.';
+
+      debugPrint('[TokoMaterial] Pembayaran status $status: $message');
+
+      // Kirim Notifikasi Latar Belakang (System Notification) - Silent (Hanya masuk drawer, tidak pop-up melayang)
+      NotificationService().showPaymentNotification(
+        title: status == 'cancelled'
+            ? 'Pembayaran Dibatalkan 🚫'
+            : 'Pembayaran Gagal ❌',
+        body: status == 'cancelled'
+            ? 'Pembayaran untuk transaksi $reference telah dibatalkan.'
+            : 'Transaksi $reference gagal diproses.',
+        isSilent: true,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Smoker App',
+      navigatorKey: _navigatorKey,
+      scaffoldMessengerKey: _scaffoldMessengerKey,
+      title: AppStrings.appName,
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark().copyWith(
-        primaryColor: Colors.brown,
-        scaffoldBackgroundColor: Colors.black,
-      ),
-
-      home: AuthWrapper(),
-
-      routes: {'/cart': (context) => CartPage()},
+      theme: AppTheme.light,
+      initialRoute: AppRouter.login,
+      routes: AppRouter.routes,
+      onGenerateRoute: (settings) {
+        final builder =
+            AppRouter.routes[settings.name] ??
+            AppRouter.routes[AppRouter.login]!;
+        return MaterialPageRoute(builder: builder, settings: settings);
+      },
     );
   }
+}
+
+class SplashPage extends StatefulWidget {
+  const SplashPage({super.key});
+
+  @override
+  State<SplashPage> createState() => _SplashPageState();
+}
+
+class _SplashPageState extends State<SplashPage> {
+  @override
+  void initState() {
+    super.initState();
+    _checkAuth();
+  }
+
+  Future<void> _checkAuth() async {
+    await Future.delayed(const Duration(seconds: 2)); // Animasi splash
+    if (!mounted) return;
+
+    final token = await SecureStorage.getToken();
+    final route = token != null ? AppRouter.dashboard : AppRouter.login;
+    Navigator.pushReplacementNamed(context, route);
+  }
+
+  @override
+  Widget build(BuildContext context) =>
+      const Scaffold(body: Center(child: CircularProgressIndicator()));
 }
