@@ -1,4 +1,4 @@
-# Project-level configuration.
+x# Project-level configuration.
 cmake_minimum_required(VERSION 3.13)
 project(runner LANGUAGES CXX)
 
