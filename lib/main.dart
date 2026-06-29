@@ -125,7 +125,7 @@ class _MyAppState extends State<MyApp> {
 
       // Kirim Notifikasi Latar Belakang (System Notification)
       NotificationService().showPaymentNotification(
-        title: 'Pembayaran Berhasil 🎉',
+        title: 'Pembayaran Berhasil',
         body: 'Transaksi $reference berhasil dibayar via Smoke Money.',
       );
 
@@ -151,8 +151,8 @@ class _MyAppState extends State<MyApp> {
       // Kirim Notifikasi Latar Belakang (System Notification) - Silent (Hanya masuk drawer, tidak pop-up melayang)
       NotificationService().showPaymentNotification(
         title: status == 'cancelled'
-            ? 'Pembayaran Dibatalkan 🚫'
-            : 'Pembayaran Gagal ❌',
+            ? 'Pembayaran Dibatalkan'
+            : 'Pembayaran Gagal',
         body: status == 'cancelled'
             ? 'Pembayaran untuk transaksi $reference telah dibatalkan.'
             : 'Transaksi $reference gagal diproses.',
